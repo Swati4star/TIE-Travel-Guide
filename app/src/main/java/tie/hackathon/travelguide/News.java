@@ -131,7 +131,11 @@ public class News extends AppCompatActivity {
                 JSONObject YTFeed = new JSONObject(String.valueOf(Result));
                 JSONArray YTFeedItems = YTFeed.getJSONObject("responseData").getJSONArray("entries");
                 Log.e("response",YTFeedItems+" ");
-                pb.setVisibility(View.GONE);
+                if(YTFeedItems.length()==0){
+                    Utils.hideKeyboard(News.this);
+                    Snackbar.make(pb, "No results found", Snackbar.LENGTH_LONG).setAction("Action", null).show();
+
+                }       pb.setVisibility(View.GONE);
              lv.setAdapter(new News_adapter(News.this , YTFeedItems) );
                 pb.setVisibility(View.GONE);
             } catch (Exception e) {

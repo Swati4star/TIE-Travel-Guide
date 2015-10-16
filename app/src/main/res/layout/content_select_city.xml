@@ -65,7 +65,7 @@
                 android:layout_height="wrap_content"
                 android:text="TO"
                 android:padding="2dp"
-                android:textSize="25sp"
+                android:textSize="18sp"
                 android:textColor="#ffffff"
 
                 android:layout_gravity="center_vertical"/>

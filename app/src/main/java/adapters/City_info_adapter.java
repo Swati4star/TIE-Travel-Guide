@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import org.json.JSONArray;
@@ -25,11 +26,14 @@ public class City_info_adapter extends BaseAdapter {
 
     Context context;
     JSONArray FeedItems;
+    int rd;
+    Button b2;
     private static LayoutInflater inflater = null;
 
-    public City_info_adapter(Context context, JSONArray FeedItems) {
+    public City_info_adapter(Context context, JSONArray FeedItems, int r) {
         this.context = context;
         this.FeedItems = FeedItems;
+        rd = r;
 
         inflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -67,16 +71,19 @@ public class City_info_adapter extends BaseAdapter {
         TextView Title = (TextView) vi.findViewById(R.id.item_name);
         TextView Description = (TextView) vi.findViewById(R.id.item_address);
         Button onmap = (Button) vi.findViewById(R.id.viewonmap);
+        b2 = (Button) vi.findViewById(R.id.b2);
 
 
         try {
             Title.setText(FeedItems.getJSONObject(position).getString("name"));
             Description.setText(FeedItems.getJSONObject(position).getString("address"));
-          } catch (JSONException e) {
+        } catch (JSONException e) {
             e.printStackTrace();
-            Log.e("eroro",e.getMessage()+" ");
+            Log.e("eroro", e.getMessage() + " ");
         }
 
+        ImageView iv = (ImageView) vi.findViewById(R.id.image);
+        iv.setImageResource(rd);
 
         onmap.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -86,10 +93,10 @@ public class City_info_adapter extends BaseAdapter {
                 Intent browserIntent = null;
                 try {
                     browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.google.com/maps?q=" +
-                            FeedItems.getJSONObject(position).getString("name") +
-                            "+(name)+@" +
-                            FeedItems.getJSONObject(position).getString("lat") +
-                            "," +
+                                    FeedItems.getJSONObject(position).getString("name") +
+                                    "+(name)+@" +
+                                    FeedItems.getJSONObject(position).getString("lat") +
+                                    "," +
                                     FeedItems.getJSONObject(position).getString("lng")
                     ));
                     context.startActivity(browserIntent);
@@ -97,6 +104,21 @@ public class City_info_adapter extends BaseAdapter {
                     e.printStackTrace();
                 }
 
+
+            }
+        });
+
+
+        b2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+
+                Intent browserIntent = null;
+                browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.google.co.in/"
+
+                ));
+                context.startActivity(browserIntent);
 
 
             }

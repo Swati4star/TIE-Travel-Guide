@@ -2,6 +2,7 @@ package tie.hackathon.travelguide;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -42,6 +43,8 @@ public class Bus_list extends AppCompatActivity implements OnDateSetListener, Ti
     SharedPreferences s ;
     SharedPreferences.Editor e;
     TextView selectdate;
+    TextView city;
+    String source,dest;
     String dates = "17-October-2015";
     public static final String DATEPICKER_TAG = "datepicker";
     @Override
@@ -51,21 +54,25 @@ public class Bus_list extends AppCompatActivity implements OnDateSetListener, Ti
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
         s = PreferenceManager.getDefaultSharedPreferences(this);
         e = s.edit();
+        source = s.getString(Constants.SOURCE_CITY, "delhi");
+        dest = s.getString(Constants.DESTINATION_CITY, "mumbai");
         lv = (ListView) findViewById(R.id.music_list);
         pb = (ProgressBar) findViewById(R.id.pb);
         selectdate = (TextView) findViewById(R.id.seldate);
 
+        city = (TextView)findViewById(R.id.city);
 
+        selectdate.setText(dates);
+        city.setText(source +" to " + dest);
+        city.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(Bus_list.this,SelectCity.class);
+                startActivity(i);
+            }
+        });
 
         try {
             new Book_RetrieveFeed().execute();
@@ -88,7 +95,6 @@ public class Bus_list extends AppCompatActivity implements OnDateSetListener, Ti
         final DatePickerDialog datePickerDialog = DatePickerDialog.newInstance(this, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH), isVibrate());
 
 
-        pb.setVisibility(View.GONE);
         selectdate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -124,7 +130,7 @@ public class Bus_list extends AppCompatActivity implements OnDateSetListener, Ti
         dates = day+"-";
 
         String monthString;
-        switch (month) {
+        switch (month+1) {
             case 1:  monthString = "January";       break;
             case 2:  monthString = "February";      break;
             case 3:  monthString = "March";         break;
@@ -143,6 +149,7 @@ public class Bus_list extends AppCompatActivity implements OnDateSetListener, Ti
         dates = dates + monthString;
         dates = dates+"-"+year;
 
+        selectdate.setText(dates);
         try {
             new Book_RetrieveFeed().execute();
 
@@ -183,9 +190,6 @@ public class Bus_list extends AppCompatActivity implements OnDateSetListener, Ti
 
         protected String doInBackground(String... urls) {
             try {
-                String source,dest;
-                source = s.getString(Constants.SOURCE_CITY,"delhi");
-                dest = s.getString(Constants.DESTINATION_CITY,"mumbai");
                 String uri = "http://csinsit.org/prabhakar/tie/bus-booking.php?src=" +
                         source +
                         "&dest=" +
@@ -219,10 +223,36 @@ public class Bus_list extends AppCompatActivity implements OnDateSetListener, Ti
                 Log.e("response", YTFeedItems + " ");
                 pb.setVisibility(View.GONE);
                 lv.setAdapter(new Bus_adapter(Bus_list.this, YTFeedItems));
-                pb.setVisibility(View.GONE);
             } catch (Exception e) {
                 e.printStackTrace();
             }
+        }
+    }
+
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        source = s.getString(Constants.SOURCE_CITY, "delhi");
+        dest = s.getString(Constants.DESTINATION_CITY, "mumbai");
+        city.setText(source +" to " + dest);
+
+        try {
+            new Book_RetrieveFeed().execute();
+
+
+        } catch (Exception e) {
+            AlertDialog alertDialog = new AlertDialog.Builder(Bus_list.this).create();
+            alertDialog.setTitle("Can't connect.");
+            alertDialog.setMessage("We cannot connect to the internet right now. Please try again later. Exception e: " + e.toString());
+            alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+                    new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                        }
+                    });
+            alertDialog.show();
+            Log.e("YouTube:", "Cannot fetch " + e.toString());
         }
     }
 }

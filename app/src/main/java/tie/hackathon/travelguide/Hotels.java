@@ -2,6 +2,7 @@ package tie.hackathon.travelguide;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -42,6 +43,8 @@ public class Hotels extends AppCompatActivity implements DatePickerDialog.OnDate
     SharedPreferences s ;
     SharedPreferences.Editor e;
     TextView selectdate;
+    String source,dest,sourcet,destt;
+    TextView city;
     String dates = "17-October-2015";
     public static final String DATEPICKER_TAG = "datepicker";
 
@@ -61,7 +64,22 @@ public class Hotels extends AppCompatActivity implements DatePickerDialog.OnDate
         pb = (ProgressBar) findViewById(R.id.pb);
         selectdate = (TextView) findViewById(R.id.seldate);
 
+        source = s.getString(Constants.SOURCE_CITY_ID,"1");
+        dest = s.getString(Constants.DESTINATION_CITY_ID,"1");
+        sourcet = s.getString(Constants.SOURCE_CITY,"Delhi");
+        destt = s.getString(Constants.DESTINATION_CITY,"Mumbai");
 
+        city = (TextView)findViewById(R.id.city);
+        city.setText("Showing " + destt + " hotels");
+        city.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(Hotels.this, SelectCity.class);
+                startActivity(i);
+            }
+        });
+
+        selectdate.setText("Check In : " + dates);
 
         final Calendar calendar = Calendar.getInstance();
         final DatePickerDialog datePickerDialog = DatePickerDialog.newInstance(this, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH), isVibrate());
@@ -82,7 +100,6 @@ public class Hotels extends AppCompatActivity implements DatePickerDialog.OnDate
             alertDialog.show();
         }
 
-        pb.setVisibility(View.GONE);
         selectdate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -116,7 +133,7 @@ public class Hotels extends AppCompatActivity implements DatePickerDialog.OnDate
         dates = day+"-";
 
         String monthString;
-        switch (month) {
+        switch (month+1) {
             case 1:  monthString = "January";       break;
             case 2:  monthString = "February";      break;
             case 3:  monthString = "March";         break;
@@ -134,6 +151,7 @@ public class Hotels extends AppCompatActivity implements DatePickerDialog.OnDate
 
         dates = dates + monthString;
         dates = dates+"-"+year;
+        selectdate.setText("Check In : " + dates);
 
         try {
             new Book_RetrieveFeed().execute();
@@ -163,9 +181,6 @@ public class Hotels extends AppCompatActivity implements DatePickerDialog.OnDate
 
         protected String doInBackground(String... urls) {
             try {
-                String source,dest;
-                source = s.getString(Constants.SOURCE_CITY_ID,"1");
-                dest = s.getString(Constants.DESTINATION_CITY_ID,"1");
                 String uri = "http://csinsit.org/prabhakar/tie/get-city-hotels.php?id=" +
                         dest+
                 "&date=" +
@@ -201,6 +216,35 @@ public class Hotels extends AppCompatActivity implements DatePickerDialog.OnDate
             } catch (Exception e) {
                 e.printStackTrace();
             }
+        }
+    }
+
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        source = s.getString(Constants.SOURCE_CITY_ID,"1");
+        dest = s.getString(Constants.DESTINATION_CITY_ID,"1");
+        sourcet = s.getString(Constants.SOURCE_CITY,"Delhi");
+        destt = s.getString(Constants.DESTINATION_CITY,"Mumbai");
+
+        city.setText("Showing " + destt + " hotels");
+        try {
+            new Book_RetrieveFeed().execute();
+
+
+        } catch (Exception e) {
+            AlertDialog alertDialog = new AlertDialog.Builder(Hotels.this).create();
+            alertDialog.setTitle("Can't connect.");
+            alertDialog.setMessage("We cannot connect to the internet right now. Please try again later. Exception e: " + e.toString());
+            alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+                    new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                        }
+                    });
+            alertDialog.show();
+            Log.e("YouTube:", "Cannot fetch " + e.toString());
         }
     }
 

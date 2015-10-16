@@ -27,10 +27,26 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
+
+
         <TextView
+            android:id="@+id/city"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="#000000"
+            android:textColor="#ffffff"
+            android:text="Select date"
+            android:padding="10dp"
+            android:textSize="20sp"
+            android:gravity="center"/>
+
+        <TextView
+            android:layout_marginTop="2dp"
             android:id="@+id/seldate"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
+            android:background="#000000"
+            android:textColor="#ffffff"
             android:text="Select date"
             android:padding="10dp"
             android:textSize="20sp"

@@ -17,9 +17,9 @@
     <string name="title_activity_city_info">CityInfo</string>
     <string name="title_activity_mood_selector">MoodSelector</string>
     <string name="title_activity_shopping_currentcity">Shopping_currentcity</string>
-    <string name="car1">Car 1</string>
-    <string name="car2">Car 2</string>
-    <string name="car3">Car 3</string>
+    <string name="car1">Hatchback</string>
+    <string name="car2">Sedan</string>
+    <string name="car3">SUV</string>
     <string name="title_activity_train_list">TrainList</string>
     <string name="title_activity_hotels">Hotels</string>
     <string name="title_activity_map">MapActivity</string>

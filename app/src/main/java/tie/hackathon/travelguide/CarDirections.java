@@ -15,6 +15,7 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.TextView;
 
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -36,15 +37,19 @@ import java.util.List;
 
 import Util.Constants;
 import Util.Utils;
+import adapters.Bus_adapter;
 
 public class CarDirections extends AppCompatActivity {
     com.google.android.gms.maps.MapFragment mapFragment;
     GoogleMap map;
     private ProgressDialog progressDialog;
-    String sorcelat,deslat,sorcelon,deslon,surce,dest,distancetext;
-    Integer distance;
-    SharedPreferences s ;
+    String sorcelat, deslat, sorcelon, deslon, surce, dest, distancetext;
+    Double distance;
+    SharedPreferences s;
     SharedPreferences.Editor e;
+    TextView coste1, coste2, coste3, toll1, toll2, toll3, total1, total2, total3;
+    Double cost1, cost2, cost3;
+    Double fuelprice = 60.00, mileage_hatchback = 30.0, mileage_sedan = 18.0, mileage_suv = 16.0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,12 +62,22 @@ public class CarDirections extends AppCompatActivity {
         e = s.edit();
 
         sorcelat = s.getString(Constants.SOURCE_CITY_LAT, Constants.DELHI_LAT);
-        sorcelon  = s.getString(Constants.SOURCE_CITY_LON, Constants.DELHI_LON);
-        deslat = s.getString(Constants.DESTINATION_CITY_LAT,Constants.MUMBAI_LAT);
-        deslon  = s.getString(Constants.DESTINATION_CITY_LON,Constants.MUMBAI_LON);
+        sorcelon = s.getString(Constants.SOURCE_CITY_LON, Constants.DELHI_LON);
+        deslat = s.getString(Constants.DESTINATION_CITY_LAT, Constants.MUMBAI_LAT);
+        deslon = s.getString(Constants.DESTINATION_CITY_LON, Constants.MUMBAI_LON);
 
         surce = s.getString(Constants.SOURCE_CITY, "Delhi");
-        dest  = s.getString(Constants.DESTINATION_CITY, "MUmbai");
+        dest = s.getString(Constants.DESTINATION_CITY, "MUmbai");
+
+        coste1 = (TextView) findViewById(R.id.travelcost1);
+        coste2 = (TextView) findViewById(R.id.travelcost2);
+        coste3 = (TextView) findViewById(R.id.travelcost3);
+        toll1 = (TextView) findViewById(R.id.toll1);
+        toll2 = (TextView) findViewById(R.id.toll2);
+        toll3 = (TextView) findViewById(R.id.toll3);
+        total1 = (TextView) findViewById(R.id.total1);
+        total2 = (TextView) findViewById(R.id.total2);
+        total3 = (TextView) findViewById(R.id.total3);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -83,8 +98,8 @@ public class CarDirections extends AppCompatActivity {
                 .findFragmentById(R.id.map);
         map = mapFragment.getMap();
 
-        ShowMarker(Double.parseDouble(sorcelat),Double.parseDouble(sorcelon),"SOURCE",R.drawable.ic_pin_drop_black_24dp);
-        ShowMarker(Double.parseDouble(deslat),Double.parseDouble(deslon),"DESTINATION",R.drawable.ic_pin_drop_black_24dp);
+        ShowMarker(Double.parseDouble(sorcelat), Double.parseDouble(sorcelon), "SOURCE", R.drawable.ic_pin_drop_black_24dp);
+        ShowMarker(Double.parseDouble(deslat), Double.parseDouble(deslon), "DESTINATION", R.drawable.ic_pin_drop_black_24dp);
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
@@ -97,17 +112,17 @@ public class CarDirections extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
 
 
-        if(item.getItemId() ==android.R.id.home)
+        if (item.getItemId() == android.R.id.home)
             finish();
 
         return super.onOptionsItemSelected(item);
     }
 
 
-    public void ShowMarker(Double LocationLat, Double LocationLong, String LocationName, Integer LocationIcon){
+    public void ShowMarker(Double LocationLat, Double LocationLong, String LocationName, Integer LocationIcon) {
         LatLng Coord = new LatLng(LocationLat, LocationLong);
 
-        if(map!=null) {
+        if (map != null) {
             map.setMyLocationEnabled(true);
             map.moveCamera(CameraUpdateFactory.newLatLngZoom(Coord, 5));
 
@@ -125,7 +140,6 @@ public class CarDirections extends AppCompatActivity {
 
         @Override
         protected void onPreExecute() {
-            // TODO Auto-generated method stub
             super.onPreExecute();
             progressDialog = new ProgressDialog(CarDirections.this);
             progressDialog.setMessage("Fetching route, Please wait...");
@@ -137,7 +151,7 @@ public class CarDirections extends AppCompatActivity {
         protected String doInBackground(Void... params) {
             try {
                 String uri = "https://maps.googleapis.com/maps/api/directions/json?origin=" +
-                        sorcelat + "," + sorcelon + "&destination=" + deslat+ "," + deslon +
+                        sorcelat + "," + sorcelon + "&destination=" + deslat + "," + deslon +
                         "&key=AIzaSyBgktirlOODUO9zWD-808D7zycmP7smp-Y&mode=driving\n";
                 URL url = new URL(uri);
                 HttpURLConnection con = (HttpURLConnection) url.openConnection();
@@ -170,9 +184,17 @@ public class CarDirections extends AppCompatActivity {
                                 .color(Color.parseColor("#05b1fb"))//Google maps blue color
                                 .geodesic(true)
                 );
-                distance = routes.getJSONArray("legs").getJSONObject(0).getJSONObject("distance").getInt("value");
+                distance = routes.getJSONArray("legs").getJSONObject(0).getJSONObject("distance").getDouble("value");
                 distancetext = routes.getJSONArray("legs").getJSONObject(0).getJSONObject("distance").getString("text");
 
+
+                cost1 = (distance / mileage_hatchback) * fuelprice;
+                cost2 = (distance / mileage_sedan) * fuelprice;
+                cost3 = (distance / mileage_suv) * fuelprice;
+
+                coste1.setText(cost1 + "");
+                coste2.setText(cost2 + "");
+                coste3.setText(cost3 + "");
                 for (int z = 0; z < list.size() - 1; z++) {
                     LatLng src = list.get(z);
                     LatLng dest = list.get(z + 1);
@@ -193,6 +215,44 @@ public class CarDirections extends AppCompatActivity {
         }
 
     }
+
+
+
+    public class tax_feed extends AsyncTask<String, Void, String> {
+
+        protected String doInBackground(String... urls) {
+            try {
+                String source,dest;
+                source = s.getString(Constants.SOURCE_CITY,"delhi");
+                dest = s.getString(Constants.DESTINATION_CITY,"mumbai");
+                String uri = "";
+                URL url = new URL(uri);
+                HttpURLConnection con = (HttpURLConnection) url.openConnection();
+                String readStream = Utils.readStream(con.getInputStream());
+
+                Log.e("here",uri + readStream+" ");
+                return readStream;
+            } catch (Exception e) {
+                e.printStackTrace();
+                return null;
+            }
+        }
+
+
+        @Override
+        protected void onPostExecute(String Result) {
+            try {
+                JSONObject YTFeed = new JSONObject(String.valueOf(Result));
+                JSONArray YTFeedItems = YTFeed.getJSONArray("results");
+                Log.e("response", YTFeedItems + " ");
+
+
+               } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
 
 
     private List<LatLng> decodePoly(String encoded) {

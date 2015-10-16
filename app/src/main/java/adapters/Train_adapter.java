@@ -2,6 +2,7 @@ package adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -95,13 +96,20 @@ public class Train_adapter extends BaseAdapter {
                     continue;
                 switch(i){
 
-                    case 0 : d0.setText("N");break;
-                    case 1 : d1.setText("N");break;
-                    case 2 : d2.setText("N");break;
-                    case 3 : d3.setText("N");break;
-                    case 4 : d4.setText("N");break;
-                    case 5 : d5.setText("N");break;
-                    case 6 : d6.setText("N");break;
+                    case 0 : d0.setText("N");
+                        d0.setBackgroundResource(R.color.red);break;
+                    case 1 : d1.setText("N");
+                        d1.setBackgroundResource(R.color.red);break;
+                    case 2 : d2.setText("N");
+                        d2.setBackgroundResource(R.color.red);break;
+                    case 3 : d3.setText("N");
+                        d3.setBackgroundResource(R.color.red);break;
+                    case 4 : d4.setText("N");
+                        d4.setBackgroundResource(R.color.red);break;
+                    case 5 : d5.setText("N");
+                        d5.setBackgroundResource(R.color.red);break;
+                    case 6 : d6.setText("N");
+                        d6.setBackgroundResource(R.color.red);break;
                 }
 
             }

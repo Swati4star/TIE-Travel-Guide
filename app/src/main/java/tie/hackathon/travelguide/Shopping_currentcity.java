@@ -110,6 +110,7 @@ public class Shopping_currentcity extends AppCompatActivity {
         protected String doInBackground(String... urls) {
             try {
                 String uri = "http://csinsit.org/prabhakar/tie/online-shopping.php?string="+item;
+                uri = uri.replace(" ","+");
                 URL url = new URL(uri);
                 HttpURLConnection con = (HttpURLConnection) url.openConnection();
                 String readStream = Utils.readStream(con.getInputStream());
@@ -130,6 +131,11 @@ public class Shopping_currentcity extends AppCompatActivity {
 
                 JSONArray YTFeedItems = YTFeed.getJSONArray("results");
                 Log.e("response", YTFeedItems + " ");
+                if(YTFeedItems.length()==0){
+                    Utils.hideKeyboard(Shopping_currentcity.this);
+                    Snackbar.make(pb, "No results found", Snackbar.LENGTH_LONG).setAction("Action", null).show();
+
+                }
                 pb.setVisibility(View.GONE);
                 lv.setAdapter(new Shop_adapter(Shopping_currentcity.this , YTFeedItems) );
 

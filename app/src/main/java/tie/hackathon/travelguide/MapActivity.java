@@ -105,12 +105,19 @@ public class MapActivity extends AppCompatActivity {
         GPSTracker tracker = new GPSTracker(this);
         if (tracker.canGetLocation() == false) {
             tracker.showSettingsAlert();
+            Log.e("cdsknvdsl ", curlat + "dsbjvdks" + curlon);
         } else {
             curlat = Double.toString(tracker.getLatitude());
             curlon = Double.toString(tracker.getLongitude());
+            Log.e("cdsknvdsl",tracker.getLatitude() + " " + curlat+"dsbjvdks"+curlon);
+            if(curlat.equals("0.0")){
+                curlat = "28.5692108";
+                 curlon =       "7701330500000";
+            }
+
+            new getcitytask().execute();
         }
 
-        new getcitytask().execute();
 
         LatLng coordinate = new LatLng(Double.parseDouble(curlat), Double.parseDouble(curlon));
         CameraUpdate yourLocation = CameraUpdateFactory.newLatLngZoom(coordinate, 10);

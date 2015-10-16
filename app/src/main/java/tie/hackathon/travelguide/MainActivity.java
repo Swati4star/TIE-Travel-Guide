@@ -47,14 +47,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         name.setText(s.getString(Constants.USER_NAME,"Swati Garg"));
         email.setText(s.getString(Constants.USER_EMAIL,"swati4star@gmail.com"));
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
 
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

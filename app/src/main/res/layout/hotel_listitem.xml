@@ -32,7 +32,7 @@
 
             <TextView
                 android:id="@+id/VideoTitle"
-                android:layout_width="182dp"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_column="0"
                 android:layout_gravity="top"
@@ -88,9 +88,9 @@
                     android:orientation="horizontal">
 
                     <Button
-                        android:background="@color/colorPrimary"
+                        android:background="@color/colorAccent"
                         android:textColor="#ffffff"
-                        android:text="View on Map"
+                        android:text="Locate"
                         android:id="@+id/map"
                         android:layout_margin="4dp"
                         android:layout_width="fill_parent"
@@ -98,7 +98,7 @@
                         android:layout_weight="1.0"/>
 
                     <Button
-                        android:background="@color/colorPrimary"
+                        android:background="@color/colorAccent"
                         android:textColor="#ffffff"
                         android:text="Call"
                         android:id="@+id/call"
@@ -107,7 +107,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1.0"/>
                     <Button
-                        android:background="@color/colorPrimary"
+                        android:background="@color/colorAccent"
                         android:textColor="#ffffff"
                         android:text="Book Now"
                         android:layout_margin="4dp"

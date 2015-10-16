@@ -1,6 +1,7 @@
 package tie.hackathon.travelguide;
 
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
@@ -13,6 +14,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -33,9 +35,10 @@ public class CityInfo extends AppCompatActivity {
 
     SharedPreferences s ;
     SharedPreferences.Editor e;
+    private ProgressDialog progressDialog;
     TwoWayView lvRest,lvShop, lvTour,lvhang;
     ProgressBar pb1,pb2,pb3,pb4;
-    TextView city_info;
+    TextView city_info,min,max,pre;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,10 +51,13 @@ public class CityInfo extends AppCompatActivity {
         lvTour = (TwoWayView) findViewById(R.id.lvTourists);
         lvShop = (TwoWayView) findViewById(R.id.lvShopping);
         lvhang = (TwoWayView) findViewById(R.id.lvhangout);
+        pre = (TextView) findViewById(R.id.pre);
         pb1 = (ProgressBar) findViewById(R.id.pb1);
         pb2 = (ProgressBar) findViewById(R.id.pb2);
         pb3 = (ProgressBar) findViewById(R.id.pb3);
         pb4 = (ProgressBar) findViewById(R.id.pb4);
+        min = (TextView) findViewById(R.id.min);
+        max= (TextView) findViewById(R.id.max);
         city_info = (TextView) findViewById(R.id.city_info);
 
         s = PreferenceManager.getDefaultSharedPreferences(this);
@@ -74,6 +80,7 @@ public class CityInfo extends AppCompatActivity {
             alertDialog.show();
             Log.e("YouTube:", "Cannot fetch " + e.toString());
         }
+
 
 
         setTitle(s.getString(Constants.DESTINATION_CITY,"Delhi"));
@@ -99,7 +106,10 @@ public class CityInfo extends AppCompatActivity {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            Log.e("vdslmvdspo","started");
+            progressDialog = new ProgressDialog(CityInfo.this);
+            progressDialog.setMessage("Fetching data, Please wait...");
+            progressDialog.setIndeterminate(true);
+            progressDialog.show();     Log.e("vdslmvdspo","started");
         }
 
         protected String doInBackground(String... urls) {
@@ -124,28 +134,50 @@ public class CityInfo extends AppCompatActivity {
 
                 city_info.setText(YTFeed.getString("description"));
 
+
+                min.setText("MIN : " +YTFeed.getJSONObject("weather").getString("min")+ " C");
+                max.setText("MAX : " +YTFeed.getJSONObject("weather").getString("max") + " C");
+
+                if(Double.parseDouble(YTFeed.getJSONObject("weather").getString("min"))<20){
+
+                    pre.setText("Do not forget to take extra sweaters.");
+
+                }else {
+                    if (Double.parseDouble(YTFeed.getJSONObject("weather").getString("max")) > 35) {
+
+                        pre.setText("It seems pretty hot there.");
+
+                    } else {
+                        pre.setText("Enjoy weather.");
+
+                    }
+                }
+
+
                 JSONArray YTFeedItems = YTFeed.getJSONArray("food");
                 Log.e("response", YTFeedItems + " ");
                 pb1.setVisibility(View.GONE);
-                lvRest.setAdapter(new City_info_adapter(CityInfo.this , YTFeedItems) );
+                lvRest.setAdapter(new City_info_adapter(CityInfo.this, YTFeedItems, R.drawable.restaurant));
 
                 YTFeedItems = YTFeed.getJSONArray("monuments");
                 Log.e("response", YTFeedItems + " ");
                 pb2.setVisibility(View.GONE);
-                lvTour.setAdapter(new City_info_adapter(CityInfo.this , YTFeedItems) );
+                lvTour.setAdapter(new City_info_adapter(CityInfo.this, YTFeedItems, R.drawable.monuments));
 
 
                 YTFeedItems = YTFeed.getJSONArray("hangout-places");
                 Log.e("response", YTFeedItems + " ");
                 pb3.setVisibility(View.GONE);
-                lvhang.setAdapter(new City_info_adapter(CityInfo.this, YTFeedItems));
+                lvhang.setAdapter(new City_info_adapter(CityInfo.this, YTFeedItems, R.drawable.hangout));
 
                 YTFeedItems = YTFeed.getJSONArray("shopping");
                 Log.e("response", YTFeedItems + " ");
                 pb4.setVisibility(View.GONE);
-                lvShop.setAdapter(new City_info_adapter(CityInfo.this, YTFeedItems));
+                lvShop.setAdapter(new City_info_adapter(CityInfo.this, YTFeedItems, R.drawable.shopping));
+                progressDialog.hide();
             } catch (Exception e) {
                 e.printStackTrace();
+                Log.e("vsdfkvaes",e.getMessage()+" dsv");
             }
         }
     }

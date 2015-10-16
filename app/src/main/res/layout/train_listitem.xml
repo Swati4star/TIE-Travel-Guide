@@ -54,26 +54,23 @@
 
 
             <TextView
-                android:id="@+id/arr"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
-                android:layout_marginLeft="5dp"
-                android:layout_marginTop="10dp"
-                android:maxLines="10"
-                android:text="BUS TYPE"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:textSize="15sp" />
-
-
-            <TextView
                 android:id="@+id/dep"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
                 android:layout_marginLeft="5dp"
                 android:layout_marginTop="10dp"
-                android:maxLines="10"
+                android:text="BUS TYPE"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textSize="15sp" />
+
+
+            <TextView
+                android:id="@+id/arr"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="5dp"
                 android:text="BUS TYPE"
                 android:textAppearance="?android:attr/textAppearanceSmall"
                 android:textSize="15sp" />
@@ -93,13 +90,15 @@
                         android:layout_weight="1.0"
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
-                        android:text="M"
+                        android:text="Mon"
                         android:gravity="center"
                         android:textSize="15sp"/>
                     <TextView
                         android:layout_weight="1.0"
                         android:layout_width="fill_parent"
+                        android:background="@color/green"
                         android:gravity="center"
+                        android:layout_margin="2dp"
                         android:id="@+id/d0"
                         android:layout_height="wrap_content"
                         android:text="Y"/>
@@ -116,12 +115,14 @@
                         android:layout_weight="1.0"
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
-                        android:text="T"
+                        android:text="Tue"
                         android:textSize="15sp"/>
                     <TextView
                         android:layout_weight="1.0"
                         android:layout_width="fill_parent"
+                        android:background="@color/green"
                         android:gravity="center"
+                        android:layout_margin="2dp"
                         android:id="@+id/d1"
                         android:layout_height="wrap_content"
                         android:text="Y"/>
@@ -138,11 +139,13 @@
                         android:layout_width="fill_parent"
                         android:gravity="center"
                         android:layout_height="wrap_content"
-                        android:text="W"
+                        android:text="Wed"
                         android:textSize="15sp"/>
                     <TextView
                         android:layout_weight="1.0"
+                        android:background="@color/green"
                         android:gravity="center"
+                        android:layout_margin="2dp"
                         android:id="@+id/d2"
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
@@ -160,11 +163,13 @@
                         android:gravity="center"
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
-                        android:text="T"
+                        android:text="Thu"
                         android:textSize="15sp"/>
                     <TextView
                         android:layout_weight="1.0"
+                        android:background="@color/green"
                         android:gravity="center"
+                        android:layout_margin="2dp"
                         android:id="@+id/d3"
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
@@ -182,12 +187,14 @@
                         android:gravity="center"
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
-                        android:text="F"
+                        android:text="Fri"
                         android:textSize="15sp"/>
                     <TextView
                         android:layout_weight="1.0"
+                        android:background="@color/green"
                         android:layout_width="fill_parent"
                         android:gravity="center"
+                        android:layout_margin="2dp"
                         android:id="@+id/d4"
                         android:layout_height="wrap_content"
                         android:text="Y"/>
@@ -203,11 +210,13 @@
                     android:layout_width="fill_parent"
                     android:gravity="center"
                     android:layout_height="wrap_content"
-                    android:text="S"
+                    android:text="Sat"
                     android:textSize="15sp"/>
                 <TextView
+                    android:background="@color/green"
                     android:layout_weight="1.0"
                     android:id="@+id/d5"
+                    android:layout_margin="2dp"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
@@ -224,12 +233,14 @@
                     android:layout_width="fill_parent"
                     android:gravity="center"
                     android:layout_height="wrap_content"
-                    android:text="S"
+                    android:text="Sun"
                     android:textSize="15sp"/>
                 <TextView
+                    android:background="@color/green"
                     android:layout_weight="1.0"
                     android:gravity="center"
                     android:id="@+id/d6"
+                    android:layout_margin="2dp"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:text="Y"/>
@@ -241,6 +252,7 @@
 
             </LinearLayout>
             <LinearLayout
+                android:layout_marginTop="10dp"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">

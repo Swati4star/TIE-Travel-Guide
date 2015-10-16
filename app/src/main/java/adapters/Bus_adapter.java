@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -23,9 +24,6 @@ import tie.hackathon.travelguide.R;
  */
 
 
-/**
- * Created by Sidharth Patro on 22-Jun-15.
- */
 public class Bus_adapter extends BaseAdapter {
 
     Context context;
@@ -62,7 +60,6 @@ public class Bus_adapter extends BaseAdapter {
         return position;
     }
 
-
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
         View vi = convertView;
@@ -72,7 +69,8 @@ public class Bus_adapter extends BaseAdapter {
         TextView Title = (TextView) vi.findViewById(R.id.bus_name);
         TextView Description = (TextView) vi.findViewById(R.id.bustype);
         TextView add = (TextView) vi.findViewById(R.id.add);
-        TextView contact = (TextView) vi.findViewById(R.id.contact);
+        Button contact = (Button) vi.findViewById(R.id.call);
+        Button url = (Button) vi.findViewById(R.id.book);
         TextView fair = (TextView) vi.findViewById(R.id.fair);
 
 
@@ -80,8 +78,31 @@ public class Bus_adapter extends BaseAdapter {
             Title.setText(FeedItems.getJSONObject(position).getString("name"));
             Description.setText(FeedItems.getJSONObject(position).getString("type"));
             add.setText(FeedItems.getJSONObject(position).getString("dep_add"));
-            contact.setText(FeedItems.getJSONObject(position).getString("contact"));
-            fair.setText(FeedItems.getJSONObject(position).getString("fair"));
+
+            contact.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(Intent.ACTION_DIAL);
+                    try {
+                        intent.setData(Uri.parse("tel:" + FeedItems.getJSONObject(position).getString("contact")));
+                        context.startActivity(intent);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
+
+            url.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent browserIntent = null;
+                        browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://redbus.in"));
+
+                    context.startActivity(browserIntent);
+                }
+            });
+
+            fair.setText(FeedItems.getJSONObject(position).getString("fair")+" Rs");
          } catch (JSONException e) {
             e.printStackTrace();
             Log.e("eroro",e.getMessage()+" ");
@@ -90,13 +111,7 @@ public class Bus_adapter extends BaseAdapter {
         vi.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(Intent.ACTION_DIAL);
-                try {
-                    intent.setData(Uri.parse("tel:"+FeedItems.getJSONObject(position).getString("contact")));
-                    context.startActivity(intent);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
+
             }
         });
 

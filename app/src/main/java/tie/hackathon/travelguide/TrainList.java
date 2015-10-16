@@ -3,6 +3,7 @@ package tie.hackathon.travelguide;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -43,8 +44,10 @@ public class TrainList extends AppCompatActivity implements com.fourmob.datetime
     DatePickerDialog.OnDateSetListener date;
     SharedPreferences s ;
     SharedPreferences.Editor e;
+    TextView city;
     TextView selectdate;
     String dates="17-10";
+    String source,dest;
     public static final String DATEPICKER_TAG = "datepicker";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,10 +60,21 @@ public class TrainList extends AppCompatActivity implements com.fourmob.datetime
 
         s = PreferenceManager.getDefaultSharedPreferences(this);
         e = s.edit();
+        source = s.getString(Constants.SOURCE_CITY, "delhi");
+        dest = s.getString(Constants.DESTINATION_CITY, "mumbai");
         lv = (ListView) findViewById(R.id.music_list);
         pb = (ProgressBar) findViewById(R.id.pb);
         selectdate = (TextView) findViewById(R.id.seldate);
-
+        city = (TextView)findViewById(R.id.city);
+        city.setText(source +" to " + dest);
+        city.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(TrainList.this,SelectCity.class);
+                startActivity(i);
+            }
+        });
+        selectdate.setText(dates);
 
         try {
             new Book_RetrieveFeed().execute();
@@ -123,9 +137,11 @@ public class TrainList extends AppCompatActivity implements com.fourmob.datetime
 
     @Override
     public void onDateSet(com.fourmob.datetimepicker.date.DatePickerDialog datePickerDialog, int year, int month, int day) {
+        month++;
         dates = day+"-"+month;
 
 
+        selectdate.setText(dates);
         try {
             new Book_RetrieveFeed().execute();
 
@@ -154,9 +170,6 @@ public class TrainList extends AppCompatActivity implements com.fourmob.datetime
 
         protected String doInBackground(String... urls) {
             try {
-                String source,dest;
-                source = s.getString(Constants.SOURCE_CITY,"delhi");
-                dest = s.getString(Constants.DESTINATION_CITY,"mumbai");
                 String uri = "http://csinsit.org/prabhakar/tie/get-trains.php?src_city=" +
                         source +
                         "&dest_city=" +
@@ -187,13 +200,39 @@ public class TrainList extends AppCompatActivity implements com.fourmob.datetime
             try {
                 JSONObject YTFeed = new JSONObject(String.valueOf(Result));
                 JSONArray YTFeedItems = YTFeed.getJSONArray("trains");
+
                 Log.e("response", YTFeedItems + " ");
                 pb.setVisibility(View.GONE);
                 lv.setAdapter(new Train_adapter(TrainList.this, YTFeedItems));
-                pb.setVisibility(View.GONE);
             } catch (Exception e) {
                 e.printStackTrace();
             }
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        source = s.getString(Constants.SOURCE_CITY, "delhi");
+        dest = s.getString(Constants.DESTINATION_CITY, "mumbai");
+        city.setText(source +" to " + dest);
+
+        try {
+            new Book_RetrieveFeed().execute();
+
+
+        } catch (Exception e) {
+            AlertDialog alertDialog = new AlertDialog.Builder(TrainList.this).create();
+            alertDialog.setTitle("Can't connect.");
+            alertDialog.setMessage("We cannot connect to the internet right now. Please try again later. Exception e: " + e.toString());
+            alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+                    new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                        }
+                    });
+            alertDialog.show();
+            Log.e("YouTube:", "Cannot fetch " + e.toString());
         }
     }
 }

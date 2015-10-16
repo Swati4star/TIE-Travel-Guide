@@ -824,7 +824,7 @@
                                     android:layout_weight="4"
                                     android:alpha="30"
                                     android:padding="10dp"
-                                    android:src="@drawable/ic_account_balance_wallet_white_48dp" />
+                                    android:src="@drawable/ic_local_atm_white_48dp" />
 
                                 <TextView
                                     android:layout_width="fill_parent"

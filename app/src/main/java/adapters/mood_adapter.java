@@ -67,7 +67,11 @@ public class mood_adapter extends BaseAdapter {
         switch (position){
 
 
-            case 0 : mood.setText("Verry Happy");
+            case 0 : mood.setText("Very Happy");mood_image.setImageResource(R.drawable.veryhappy);break;
+            case 1 : mood.setText("Happy");mood_image.setImageResource(R.drawable.happy);break;
+            case 2 : mood.setText("Normal");mood_image.setImageResource(R.drawable.normal);break;
+            case 3 : mood.setText("Sad");mood_image.setImageResource(R.drawable.sap);break;
+            case 4 : mood.setText("Very Sad");mood_image.setImageResource(R.drawable.verysad);break;
         }
 
         return vi;
