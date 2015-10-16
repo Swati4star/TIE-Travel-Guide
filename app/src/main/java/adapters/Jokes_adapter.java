@@ -67,7 +67,7 @@ public class Jokes_adapter extends BaseAdapter {
         if (vi == null)
             vi = inflater.inflate(R.layout.jokes_listitem, null);
 
-        TextView Title = (TextView) vi.findViewById(R.id.VideoTitle);
+        TextView Title = (TextView) vi.findViewById(R.id.joke);
 
         try {
 
@@ -77,19 +77,6 @@ public class Jokes_adapter extends BaseAdapter {
             Log.e("eroro",e.getMessage()+" ");
         }
 
-        vi.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                Intent browserIntent = null;
-                try {
-                    browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(FeedItems.getJSONObject(position).getString("url")));
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-                context.startActivity(browserIntent);
-            }
-        });
 
         return vi;
     }

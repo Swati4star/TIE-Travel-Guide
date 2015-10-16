@@ -70,6 +70,10 @@
             android:theme="@style/AppTheme.NoActionBar" >
         </activity>
         <activity
+            android:name=".Books_new"
+            android:label="@string/title_activity_music" >
+        </activity>
+        <activity
             android:name=".News"
             android:label="@string/title_activity_music"
             android:theme="@style/AppTheme.NoActionBar" >

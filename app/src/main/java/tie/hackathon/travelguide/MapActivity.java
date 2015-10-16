@@ -80,14 +80,15 @@ public class MapActivity extends AppCompatActivity {
         Integer mo = Integer.parseInt(mode);
         switch(mo){
 
-            case 0 : icon = R.drawable.ic_attach_money_black_24dp;break;
-            case 1 : icon = R.drawable.ic_insert_emoticon_black_24dp;break;
-            case 2 : icon = R.drawable.ic_attach_money_black_24dp;break;
-            case 3 : icon = R.drawable.ic_attach_money_black_24dp;break;
-            case 4 : icon = R.drawable.ic_attach_money_black_24dp;break;
-            case 5 : icon = R.drawable.ic_attach_money_black_24dp;break;
-            case 6 : icon = R.drawable.ic_attach_money_black_24dp;break;
-            case 7 : icon = R.drawable.ic_attach_money_black_24dp;break;
+            case 0 : icon = R.drawable.ic_local_pizza_black_24dp;break;
+            case 1 : icon = R.drawable.ic_local_bar_black_24dp;break;
+            case 2 : icon = R.drawable.ic_camera_alt_black_24dp;break;
+            case 3 : icon = R.drawable.ic_directions_bus_black_24dp;break;
+            case 4 : icon = R.drawable.ic_local_mall_black_24dp;break;
+            case 5 : icon = R.drawable.ic_local_gas_station_black_24dp;break;
+            case 6 : icon = R.drawable.ic_local_atm_black_24dp;break;
+            case 7 : icon = R.drawable.ic_local_hospital_black_24dp;break;
+
             default : icon = R.drawable.ic_attach_money_black_24dp;break;
         }
 
@@ -111,8 +112,8 @@ public class MapActivity extends AppCompatActivity {
             curlon = Double.toString(tracker.getLongitude());
             Log.e("cdsknvdsl",tracker.getLatitude() + " " + curlat+"dsbjvdks"+curlon);
             if(curlat.equals("0.0")){
-                curlat = "28.5692108";
-                 curlon =       "7701330500000";
+                curlat = "28.5952242";
+                 curlon = "77.1656782";
             }
 
             new getcitytask().execute();
@@ -120,7 +121,7 @@ public class MapActivity extends AppCompatActivity {
 
 
         LatLng coordinate = new LatLng(Double.parseDouble(curlat), Double.parseDouble(curlon));
-        CameraUpdate yourLocation = CameraUpdateFactory.newLatLngZoom(coordinate, 10);
+        CameraUpdate yourLocation = CameraUpdateFactory.newLatLngZoom(coordinate, 16);
         map.animateCamera(yourLocation);
 
 
@@ -221,7 +222,7 @@ public class MapActivity extends AppCompatActivity {
                 URL url = new URL(uri);
                 HttpURLConnection con = (HttpURLConnection) url.openConnection();
                 String readStream = Utils.readStream(con.getInputStream());
-                Log.e("here", readStream + " ");
+                Log.e("here", url + readStream + " ");
                 return readStream;
             } catch (Exception e) {
                 Log.e("here", e.getMessage() + " ");

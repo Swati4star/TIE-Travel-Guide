@@ -15,7 +15,7 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <include layout="@layout/content_news" />
+    <include layout="@layout/content_books_new" />
 
 
 

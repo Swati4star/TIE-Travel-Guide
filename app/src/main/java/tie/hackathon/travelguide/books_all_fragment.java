@@ -1,19 +1,23 @@
 package tie.hackathon.travelguide;
 
+import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
+import android.support.v4.app.Fragment;
 import android.util.Log;
-import android.view.MenuItem;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 
@@ -23,40 +27,41 @@ import org.lucasr.twowayview.TwoWayView;
 
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 
 import Util.Constants;
 import Util.Utils;
 import adapters.Books_adapter;
-import adapters.Videos_adapter;
+import adapters.CheckList_adapter;
 import adapters.mood_adapter;
+import database.DBhelp_new;
+import database.TableEntry_new;
 
-public class Books extends AppCompatActivity {
+
+public class books_all_fragment extends Fragment {
 
 
-
+    public static Activity activity;
     SharedPreferences s ;
     SharedPreferences.Editor e;
     ProgressBar pb;
     ListView lv;
-    TwoWayView lv2;
     String mood = "happy";
+    public books_all_fragment() {
+        // Required empty public constructor
+    }
+
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_books);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
 
 
+        View v = inflater.inflate(R.layout.content_books_fragment_all, container, false);
 
-
-
-
-
-
-        s = PreferenceManager.getDefaultSharedPreferences(this);
+        s = PreferenceManager.getDefaultSharedPreferences(activity);
         e = s.edit();
-
         Integer moods = Integer.parseInt(s.getString(Constants.CURRENT_SCORE,"2"));
         if(moods>10)
             mood = "veryhappy";
@@ -69,18 +74,16 @@ public class Books extends AppCompatActivity {
         else
             mood = "verysad";
 
-        lv = (ListView) findViewById(R.id.music_list);
-        lv2 = (TwoWayView) findViewById(R.id.lvmoods);
-        pb = (ProgressBar) findViewById(R.id.pb);
+        lv = (ListView) v.findViewById(R.id.music_list);
+        pb = (ProgressBar) v.findViewById(R.id.pb);
 
 
-        lv2.setAdapter(new mood_adapter(this));
         try {
             new Book_RetrieveFeed().execute();
 
 
         } catch (Exception e) {
-            AlertDialog alertDialog = new AlertDialog.Builder(this).create();
+            AlertDialog alertDialog = new AlertDialog.Builder(activity).create();
             alertDialog.setTitle("Can't connect.");
             alertDialog.setMessage("We cannot connect to the internet right now. Please try again later.");
             alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
@@ -93,64 +96,10 @@ public class Books extends AppCompatActivity {
             Log.e("YouTube:", "Cannot fetch " + e.toString());
         }
 
-        setTitle("Books");
-
-        getSupportActionBar().setHomeButtonEnabled(true);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-
-        lv2.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-
-                switch (i) {
-
-                    case 0:
-                        mood = "veryhappy";
-                        break;
-                    case 1: mood = "happy";
-                        break;
-                    case 2: mood = "normal";
-                        break;
-                    case 3: mood = "sad";
-                        break;
-                    case 4: mood = "verysad";
-                        break;
-                }
-
-                try {
-                    new Book_RetrieveFeed().execute();
-
-
-                } catch (Exception e) {
-                    AlertDialog alertDialog = new AlertDialog.Builder(Books.this).create();
-                    alertDialog.setTitle("Can't connect.");
-                    alertDialog.setMessage("We cannot connect to the internet right now. Please try again later.");
-                    alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
-                            new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int which) {
-                                    dialog.dismiss();
-                                }
-                            });
-                    alertDialog.show();
-                    Log.e("YouTube:", "Cannot fetch " + e.toString());
-                }
-
-            }
-        });
 
 
 
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-
-
-        if(item.getItemId() ==android.R.id.home)
-            finish();
-
-        return super.onOptionsItemSelected(item);
+        return v;
     }
 
     public class Book_RetrieveFeed extends AsyncTask<String, Void, String> {
@@ -178,7 +127,7 @@ public class Books extends AppCompatActivity {
                 JSONArray YTFeedItems = YTFeed.getJSONArray("items");
                 Log.e("response",YTFeedItems+" ");
                 pb.setVisibility(View.GONE);
-             lv.setAdapter(new Books_adapter(Books.this , YTFeedItems) );
+                lv.setAdapter(new Books_adapter(activity , YTFeedItems) );
                 pb.setVisibility(View.GONE);
             } catch (Exception e) {
                 e.printStackTrace();
@@ -187,9 +136,9 @@ public class Books extends AppCompatActivity {
     }
 
     @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        finish();
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        this.activity = activity;
     }
 
 

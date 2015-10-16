@@ -188,13 +188,13 @@ public class CarDirections extends AppCompatActivity {
                 distancetext = routes.getJSONArray("legs").getJSONObject(0).getJSONObject("distance").getString("text");
 
 
-                cost1 = (distance / mileage_hatchback) * fuelprice;
-                cost2 = (distance / mileage_sedan) * fuelprice;
-                cost3 = (distance / mileage_suv) * fuelprice;
+                cost1 = (distance / mileage_hatchback) * fuelprice/1000;
+                cost2 = (distance / mileage_sedan) * fuelprice/1000;
+                cost3 = (distance / mileage_suv) * fuelprice/1000;
 
-                coste1.setText(cost1 + "");
-                coste2.setText(cost2 + "");
-                coste3.setText(cost3 + "");
+                coste1.setText(cost1.intValue() + "");
+                coste2.setText(cost2.intValue() + "");
+                coste3.setText(cost3.intValue() + "");
                 for (int z = 0; z < list.size() - 1; z++) {
                     LatLng src = list.get(z);
                     LatLng dest = list.get(z + 1);

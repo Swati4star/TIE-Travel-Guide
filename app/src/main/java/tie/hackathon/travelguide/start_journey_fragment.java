@@ -96,7 +96,7 @@ public class start_journey_fragment extends Fragment implements View.OnClickList
                 break;
 
             case R.id.book:
-                i = new Intent(activity, Books.class);
+                i = new Intent(activity, Books_new.class);
                 startActivity(i);
                 break;
 
