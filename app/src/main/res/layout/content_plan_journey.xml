@@ -48,7 +48,7 @@
                     <FrameLayout
                         android:layout_width="fill_parent"
                         android:layout_height="fill_parent"
-                        android:background="@color/colorPrimary"
+                        android:background="@color/food"
                         android:orientation="horizontal">
 
 
@@ -96,7 +96,7 @@
                     <FrameLayout
                         android:layout_width="fill_parent"
                         android:layout_height="fill_parent"
-                        android:background="@color/colorPrimary"
+                        android:background="@color/food"
                         android:orientation="horizontal">
 
 
@@ -153,7 +153,7 @@
                     <FrameLayout
                         android:layout_width="fill_parent"
                         android:layout_height="fill_parent"
-                        android:background="@color/colorPrimary"
+                        android:background="@color/food"
                         android:orientation="horizontal">
 
 
@@ -201,7 +201,7 @@
                     <FrameLayout
                         android:layout_width="fill_parent"
                         android:layout_height="fill_parent"
-                        android:background="@color/colorPrimary"
+                        android:background="@color/food"
                         android:orientation="horizontal">
 
 
@@ -257,7 +257,7 @@
                     <FrameLayout
                         android:layout_width="fill_parent"
                         android:layout_height="fill_parent"
-                        android:background="@color/colorPrimary"
+                        android:background="@color/rich"
                         android:orientation="horizontal">
 
 

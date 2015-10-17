@@ -20,8 +20,8 @@
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:alpha=".20"
-        android:scaleType="centerCrop"
-        android:src="@drawable/travel5" />
+        android:id="@+id/bg"
+        android:scaleType="centerCrop" />
 
 
 

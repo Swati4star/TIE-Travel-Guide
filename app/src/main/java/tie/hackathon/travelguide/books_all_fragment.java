@@ -7,6 +7,7 @@ import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -17,6 +18,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
@@ -43,11 +45,12 @@ public class books_all_fragment extends Fragment {
 
 
     public static Activity activity;
-    SharedPreferences s ;
+    SharedPreferences s;
     SharedPreferences.Editor e;
     ProgressBar pb;
     ListView lv;
     String mood = "happy";
+
     public books_all_fragment() {
         // Required empty public constructor
     }
@@ -62,17 +65,24 @@ public class books_all_fragment extends Fragment {
 
         s = PreferenceManager.getDefaultSharedPreferences(activity);
         e = s.edit();
-        Integer moods = Integer.parseInt(s.getString(Constants.CURRENT_SCORE,"2"));
-        if(moods>10)
+        Integer moods = Integer.parseInt(s.getString(Constants.CURRENT_SCORE, "2"));
+        ImageView iv = (ImageView) v.findViewById(R.id.bg);
+        if (moods > 10) {
             mood = "veryhappy";
-        else if(moods>2)
+            iv.setBackgroundResource(R.color.verhappy);
+        } else if (moods > 2) {
             mood = "happy";
-        else if(moods>-2)
+            iv.setBackgroundResource(R.color.happy);
+        } else if (moods > -2) {
             mood = "normal";
-        else if(moods>-10)
+            iv.setBackgroundResource(R.color.normal);
+        } else if (moods > -10) {
             mood = "sad";
-        else
+            iv.setBackgroundResource(R.color.sad);
+        } else {
             mood = "verysad";
+            iv.setBackgroundResource(R.color.versad);
+        }
 
         lv = (ListView) v.findViewById(R.id.music_list);
         pb = (ProgressBar) v.findViewById(R.id.pb);
@@ -97,8 +107,6 @@ public class books_all_fragment extends Fragment {
         }
 
 
-
-
         return v;
     }
 
@@ -107,7 +115,7 @@ public class books_all_fragment extends Fragment {
 
         protected String doInBackground(String... urls) {
             try {
-                String uri = "https://www.googleapis.com/books/v1/volumes?q="+mood;
+                String uri = "https://www.googleapis.com/books/v1/volumes?q=" + mood;
                 URL url = new URL(uri);
                 HttpURLConnection con = (HttpURLConnection) url.openConnection();
                 String readStream = Utils.readStream(con.getInputStream());
@@ -125,10 +133,9 @@ public class books_all_fragment extends Fragment {
             try {
                 JSONObject YTFeed = new JSONObject(String.valueOf(Result));
                 JSONArray YTFeedItems = YTFeed.getJSONArray("items");
-                Log.e("response",YTFeedItems+" ");
+                Log.e("response", YTFeedItems + " ");
                 pb.setVisibility(View.GONE);
-                lv.setAdapter(new Books_adapter(activity , YTFeedItems) );
-                pb.setVisibility(View.GONE);
+                lv.setAdapter(new Books_adapter(activity, YTFeedItems));
             } catch (Exception e) {
                 e.printStackTrace();
             }

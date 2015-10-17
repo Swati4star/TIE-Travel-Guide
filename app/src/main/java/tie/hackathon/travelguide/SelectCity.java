@@ -78,6 +78,7 @@ public class SelectCity extends AppCompatActivity {
                     e.putString(Constants.SOURCE_CITY_LAT, lat.get(sposition));
                     e.putString(Constants.DESTINATION_CITY_LON, lon.get(dposition));
                     e.putString(Constants.SOURCE_CITY_LON, lon.get(sposition));
+                    startService(new Intent(SelectCity.this, LocationService.class));
 
                     e.commit();
                     finish();

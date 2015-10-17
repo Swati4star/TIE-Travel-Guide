@@ -25,5 +25,6 @@
     <string name="title_activity_map">MapActivity</string>
     <string name="title_activity_shopping">Shopping</string>
     <string name="title_activity_jokes">Jokes</string>
+    <string name="title_activity_splash">Splash</string>
 
 </resources>

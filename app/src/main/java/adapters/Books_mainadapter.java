@@ -21,7 +21,7 @@ public class Books_mainadapter extends FragmentStatePagerAdapter {
 
         @Override
         public Fragment getItem(int arg0) {
-            if (arg0==1)
+            if (arg0==0)
             {
                books_all_fragment umf = new books_all_fragment();
 
