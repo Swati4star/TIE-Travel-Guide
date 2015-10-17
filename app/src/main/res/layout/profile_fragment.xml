@@ -2,11 +2,10 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
 
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="fill_parent"
     android:layout_gravity="center"
     android:orientation="vertical"
-    android:weightSum="1"
-    android:background="@color/colorPrimary">
+    android:weightSum="1">
 
     <TextView
         android:id="@+id/prof_name"
@@ -15,36 +14,39 @@
         android:textColor="#ffffff"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginTop="25dp"
-        android:layout_marginBottom="15dp" />
+        android:layout_margin="10dp" />
 
     <ImageView
         android:id="@+id/prof_image"
-        android:layout_width="200sp"
-        android:layout_height="200sp"
+        android:layout_width="170sp"
+        android:layout_height="170sp"
         android:layout_gravity="center" />
 
     <ImageView
         android:id="@+id/tweet"
-        android:layout_width="79dp"
-        android:layout_height="73dp"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
         android:layout_marginTop="10px"
-        android:src="@drawable/tweet_button"
+        android:background="@drawable/t2"
         android:layout_gravity="center"
-        android:layout_margin="50dp"
-        android:layout_weight="0.17" />
+        android:layout_margin="10dp" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Tap &apos;T&apos; to post "
+        android:text="Tap &apos;Me&apos; to tweet "
         android:id="@+id/textView"
         android:layout_gravity="center_horizontal"
-        android:layout_weight="0.06"
         android:textColor="#806f6f6f"
         android:textSize="20dp"
         android:textStyle="bold" />
 
+    <ImageView
+        android:layout_width="50dp"
+        android:layout_marginTop="60dp"
+        android:layout_height="50dp"
+        android:layout_gravity="bottom|center"
+        android:src="@drawable/google_travel_logo" />
 
 
 

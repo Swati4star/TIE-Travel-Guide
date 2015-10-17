@@ -19,9 +19,7 @@
     <ImageView
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:alpha=".20"
-        android:scaleType="centerCrop"
-        android:src="@drawable/travel5" />
+        android:alpha=".20"/>
 
 
         <LinearLayout
@@ -54,6 +52,7 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:padding="10dp"
+                android:id="@+id/text"
                 android:text="Suggested for you"
                 android:textSize="20sp"
                 android:textStyle="bold" />

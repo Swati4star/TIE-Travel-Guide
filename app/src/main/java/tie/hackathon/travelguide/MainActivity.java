@@ -99,6 +99,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             fragment = new plan_journey_fragment();
             fragmentManager.beginTransaction().replace(R.id.inc, fragment).commit();
 
+        } else if (id == R.id.nav_city) {
+
+            fragment = new city_fragment();
+            fragmentManager.beginTransaction().replace(R.id.inc, fragment).commit();
+
         } else if (id == R.id.nav_checklist) {
             fragment = new CheckList_fragment();
             fragmentManager.beginTransaction().replace(R.id.inc, fragment).commit();

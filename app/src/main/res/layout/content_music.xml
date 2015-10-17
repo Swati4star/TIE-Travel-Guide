@@ -13,8 +13,8 @@
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:alpha=".20"
-        android:scaleType="centerCrop"
-        android:src="@drawable/travel5" />
+        android:id="@+id/iv"
+        android:scaleType="centerCrop" />
 
 
 
@@ -40,7 +40,7 @@
                 android:id="@+id/suggested_music_list"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="2.5"
+                android:layout_weight="2.2"
                 android:drawSelectorOnTop="false"
                 android:orientation="horizontal"
                 tools:context=".MainActivity" />

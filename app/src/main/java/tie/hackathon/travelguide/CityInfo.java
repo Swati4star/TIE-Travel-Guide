@@ -3,6 +3,7 @@ package tie.hackathon.travelguide;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -39,6 +40,7 @@ public class CityInfo extends AppCompatActivity {
     TwoWayView lvRest,lvShop, lvTour,lvhang;
     ProgressBar pb1,pb2,pb3,pb4;
     TextView city_info,min,max,pre;
+    Intent i;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,6 +48,7 @@ public class CityInfo extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        i = getIntent();
 
         lvRest = (TwoWayView) findViewById(R.id.lvRestaurants);
         lvTour = (TwoWayView) findViewById(R.id.lvTourists);
@@ -83,7 +86,10 @@ public class CityInfo extends AppCompatActivity {
 
 
 
-        setTitle(s.getString(Constants.DESTINATION_CITY,"Delhi"));
+        String tit = i.getStringExtra("name_");
+        if(tit==null)
+            tit = s.getString(Constants.DESTINATION_CITY, "Delhi");
+        setTitle(tit);
 
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -114,7 +120,12 @@ public class CityInfo extends AppCompatActivity {
 
         protected String doInBackground(String... urls) {
             try {
-                String uri = "http://csinsit.org/prabhakar/tie/get-city-info.php?id="+s.getString(Constants.DESTINATION_CITY_ID,"1");
+                String id = i.getStringExtra("id_");
+                Log.e("cbvsbk",id+" " );
+                if(id==null){
+                 id = s.getString(Constants.DESTINATION_CITY_ID,"1");
+                }
+                String uri = "http://csinsit.org/prabhakar/tie/get-city-info.php?id="+id;
                 URL url = new URL(uri);
                 HttpURLConnection con = (HttpURLConnection) url.openConnection();
                 String readStream = Utils.readStream(con.getInputStream());

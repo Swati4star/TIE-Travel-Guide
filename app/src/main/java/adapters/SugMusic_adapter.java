@@ -68,7 +68,7 @@ public class SugMusic_adapter extends BaseAdapter {
 
         TextView Title = (TextView) vi.findViewById(R.id.VideoTitle);
         TextView Description = (TextView) vi.findViewById(R.id.VideoDescription);
-        ImageView VideoThumbnail = (ImageView) vi.findViewById(R.id.VideoThumbnail);
+        ImageView VideoThumbnail = (ImageView) vi.findViewById(R.id.PlayButton);
 
 
         try {
@@ -85,7 +85,7 @@ public class SugMusic_adapter extends BaseAdapter {
             Log.e("eroro",e.getMessage()+" ");
         }
 
-        vi.setOnClickListener(new View.OnClickListener() {
+        VideoThumbnail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 

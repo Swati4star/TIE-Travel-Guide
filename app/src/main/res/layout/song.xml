@@ -12,7 +12,7 @@
         android:layout_gravity="center_vertical"
         android:layout_height="40dp"
         android:id="@+id/image"
-        android:src="@drawable/travel4"/>
+        android:src="@drawable/images"/>
 
     <LinearLayout
         android:padding="5dp"

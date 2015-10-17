@@ -18,6 +18,7 @@ import android.widget.AdapterView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -42,6 +43,7 @@ public class Videos extends AppCompatActivity {
     ProgressBar pb;
     String playid;
     ListView lv;
+    TextView tt;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,6 +51,7 @@ public class Videos extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        tt = (TextView) findViewById(R.id.text);
         playid = Constants.PLAY_LIST_HAPPY;
         pb = (ProgressBar) findViewById(R.id.pb);
         s = PreferenceManager.getDefaultSharedPreferences(this);
@@ -98,11 +101,11 @@ public class Videos extends AppCompatActivity {
 
                 switch(i){
 
-                    case 0 : playid = Constants.PLAY_LIST_VERYHAPPY;break;
-                    case 1 : playid = Constants.PLAY_LIST_HAPPY;break;
-                    case 2 : playid = Constants.PLAY_LIST_NORMAL;break;
-                    case 3 : playid = Constants.PLAY_LIST_SAD;break;
-                    case 4 : playid = Constants.PLAY_LIST_VERYSAD;break;
+                    case 0 : playid = Constants.PLAY_LIST_VERYHAPPY;tt.setText("Very Happy");break;
+                    case 1 : playid = Constants.PLAY_LIST_HAPPY;tt.setText("Happy");break;
+                    case 2 : playid = Constants.PLAY_LIST_NORMAL;tt.setText("Normal");break;
+                    case 3 : playid = Constants.PLAY_LIST_SAD;tt.setText("Sad");break;
+                    case 4 : playid = Constants.PLAY_LIST_VERYSAD;tt.setText("Very Sad");break;
                 }
 
                 try {

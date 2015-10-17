@@ -22,6 +22,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.MediaController;
 
@@ -52,6 +53,7 @@ public class Music extends AppCompatActivity implements MediaController.MediaPla
     private MusicService musicSrv;
     SharedPreferences s ;
     SharedPreferences.Editor e;
+    ImageView iv;
     private Intent playIntent;
     private boolean musicBound=false;
     private boolean paused=false, playbackPaused=false;
@@ -66,12 +68,28 @@ public class Music extends AppCompatActivity implements MediaController.MediaPla
 
         songView = (ListView)findViewById(R.id.music_list);
         songList = new ArrayList<Song>();
+        iv = (ImageView) findViewById(R.id.iv);
 
         s = PreferenceManager.getDefaultSharedPreferences(this);
         e = s.edit();
 
         getSongList();
         setController();
+
+        Integer moods = Integer.parseInt(s.getString(Constants.CURRENT_SCORE, "2"));
+
+        if (moods > 10) {
+            iv.setBackgroundResource(R.color.verhappy);
+        } else if (moods > 2) {
+            iv.setBackgroundResource(R.color.happy);
+        } else if (moods > -2) {
+            iv.setBackgroundResource(R.color.normal);
+        } else if (moods > -10) {
+            iv.setBackgroundResource(R.color.sad);
+        } else {
+            iv.setBackgroundResource(R.color.versad);
+        }
+
 
 
         Collections.sort(songList, new Comparator<Song>() {
@@ -129,12 +147,20 @@ public class Music extends AppCompatActivity implements MediaController.MediaPla
                     (android.provider.MediaStore.Audio.Media.ARTIST);
             int musicColumn = musicCursor.getColumnIndex
                     (MediaStore.Audio.Media.ALBUM_ID);
-          //  int genre_id = musicCursor2.getColumnIndex(MediaStore.Audio.Genres.NAME);
+            int musicType = musicCursor.getColumnIndex
+                    (MediaStore.Audio.Media.IS_MUSIC);
+            //  int genre_id = musicCursor2.getColumnIndex(MediaStore.Audio.Genres.NAME);
 
             //add songs to list
             do {
                // Log.e("music type", musicCursor.getString(musicCursor.getColumnIndex(MediaStore.Audio.Media.MIME_TYPE))+" ");
                 long thisId = musicCursor.getLong(idColumn);
+
+
+                Integer thisTitle2 = musicCursor.getInt(musicType);
+                if(thisTitle2==0)
+                    continue;
+
                 String thisTitle = musicCursor.getString(titleColumn);
                 String thisArtist = musicCursor.getString(artistColumn);
                 String album = musicCursor.getString(musicColumn);

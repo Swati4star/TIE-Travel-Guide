@@ -31,7 +31,7 @@
             android:layout_weight="1"/>
 
         <TextView
-            android:background="@color/colorAccent"
+            android:background="@color/food"
             android:layout_width="fill_parent"
             android:gravity="center"
             android:id="@+id/moodtext"

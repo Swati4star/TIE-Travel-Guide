@@ -87,7 +87,7 @@ import tie.hackathon.travelguide.Shopping_currentcity;
         Uri uri = ContentUris.withAppendedId(sArtworkUri, Long.parseLong(songs.get(position).getAlbum_id()));
         ContentResolver res = context.getContentResolver();
         InputStream in = null;
-        iv.setImageResource(R.drawable.travel4);
+        iv.setImageResource(R.drawable.images);
         try {
             in = res.openInputStream(uri);
             Bitmap artwork = BitmapFactory.decodeStream(in);

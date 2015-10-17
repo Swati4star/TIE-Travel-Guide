@@ -6,6 +6,8 @@
             android:title="Plan a journey" />
         <item android:id="@+id/nav_start" android:icon="@android:drawable/ic_menu_directions"
             android:title="Start a journey" />
+        <item android:id="@+id/nav_city" android:icon="@android:drawable/ic_menu_day"
+            android:title="Choose a city to visit" />
         <item android:id="@+id/nav_checklist" android:icon="@android:drawable/ic_menu_agenda"
             android:title="Check List" />
 
