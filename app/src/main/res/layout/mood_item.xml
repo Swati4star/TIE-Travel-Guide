@@ -19,23 +19,25 @@
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:orientation="vertical"
         android:layout_width="100dp"
+        android:background="@color/rich"
         android:layout_height="wrap_content"
-        android:layout_margin="4dp">
+        android:padding="4dp">
 
         <ImageView
 
             android:layout_width="fill_parent"
             android:layout_height="100dp"
             android:id="@+id/mood"
-            android:src="@drawable/ic_insert_emoticon_black_24dp"
+            android:src="@drawable/happy"
             android:layout_weight="1"/>
 
         <TextView
-            android:background="@color/food"
+            android:background="@color/rich"
             android:layout_width="fill_parent"
             android:gravity="center"
             android:id="@+id/moodtext"
             android:textColor="#ffffff"
+            android:textStyle="bold"
             android:layout_height="wrap_content"
             android:text="Happy"/>
 

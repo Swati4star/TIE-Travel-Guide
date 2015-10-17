@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
@@ -69,10 +70,10 @@ public class Hotels_adapter extends BaseAdapter {
 
         TextView Title = (TextView) vi.findViewById(R.id.VideoTitle);
         TextView Description = (TextView) vi.findViewById(R.id.VideoDescription);
-        Button call,map,book;
-        call = (Button) vi.findViewById(R.id.call);
-        map = (Button) vi.findViewById(R.id.map);
-        book = (Button) vi.findViewById(R.id.book);
+        LinearLayout call,map,book;
+        call = (LinearLayout) vi.findViewById(R.id.call);
+        map = (LinearLayout) vi.findViewById(R.id.map);
+        book = (LinearLayout) vi.findViewById(R.id.book);
 
         try {
             Title.setText(FeedItems.getJSONObject(position).getString("name"));

@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import org.json.JSONArray;
@@ -27,7 +28,7 @@ public class City_info_adapter extends BaseAdapter {
     Context context;
     JSONArray FeedItems;
     int rd;
-    Button b2;
+    LinearLayout b2;
     private static LayoutInflater inflater = null;
 
     public City_info_adapter(Context context, JSONArray FeedItems, int r) {
@@ -70,8 +71,8 @@ public class City_info_adapter extends BaseAdapter {
 
         TextView Title = (TextView) vi.findViewById(R.id.item_name);
         TextView Description = (TextView) vi.findViewById(R.id.item_address);
-        Button onmap = (Button) vi.findViewById(R.id.viewonmap);
-        b2 = (Button) vi.findViewById(R.id.b2);
+        LinearLayout onmap = (LinearLayout) vi.findViewById(R.id.map);
+        b2 = (LinearLayout) vi.findViewById(R.id.b2);
 
 
         try {
