@@ -1,4 +1,7 @@
 # TIE-Travel-Guide
+
+https://docs.google.com/presentation/d/1gdx3OZjdIcqVqsgAj2jz-REFT7xI716d6iNE_1XBg4A/edit?usp=sharing
+
 While travelling from one place to another, there are a lot of factors to be considered so as to make the trip a memorable one. Our product helps the traveller with anything and everything  that he might need from the moment he plans the journey till the time he is back home happy and content.
 The product includes a wide variety of options- from Selection of Mode of Transport to finding out about the place of visit to provision of Best music,videos,novels depending on the mood of the traveller. Just as mentioned above, the product covers anything and everything.
 Starting with the selection of Mode of Transportation, the user can choose from- By road, Bus, railways or airlines. After selection of the mode, we let him know the best options available for the chosen mode of transportation. For example, if the chosen mode is By Road, we let him know about the total toll taxes and the total cost of fuel he has to bear. For bus, train and plane, we let him know about the best options available in market and purchase the tickets from the app itself.
